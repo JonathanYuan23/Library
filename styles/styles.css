@@ -73,7 +73,7 @@ button {
 }
 
 #add-entry, #delete-entry {
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     height: 50px;
     width: 50px;
