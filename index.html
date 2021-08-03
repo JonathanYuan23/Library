@@ -8,22 +8,13 @@
         <!-- css -->
         <link rel="stylesheet" href="styles/reset.css" />
         <link rel="stylesheet" href="styles/styles.css" />
-        <!-- font awesome -->
-        <link
-            rel="stylesheet"
-            href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
-            integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk"
-            crossorigin="anonymous"
-        />
     </head>
     <body>
         <header>
-            <div id="title">
-                <h1>Library</h1>
-                <h2>by Jonathan Yuan</h2>
-            </div>
+            <h1>Library</h1>
+            <h2>by Jonathan Yuan</h2>
         </header>
-        <div id="info-header">
+        <section id="info-header">
             <ul id="info">
                 <li class="info-section">
                     <h3 class="info-section-title">Books:</h3>
@@ -42,24 +33,93 @@
                     <span>0</span>
                 </li>
             </ul>
-            <hr>
-        </div>
+            <hr />
+        </section>
         <main>
             <div id="edit-entries">
-                <button id="add-entry"><i class="fas fa-plus"></i></button>
-                <button id="delete-entry"><i class="far fa-minus-square"></i></button>
+                <button id="add-entry">&plus;</button>
+                <button id="delete-entries">&times;</button>
             </div>
             <div id="entries">
-                <div class="entry">A</div>
-                <div class="entry">B</div>
-                <div class="entry">C</div>
-                <div class="entry">D</div>
-                <div class="entry">E</div>
-                <div class="entry">F</div>
-                <div class="entry">G</div>
-                <div class="entry">H</div>
-                <div class="entry">I</div>
+                <!-- <div class="entry">
+                    <h3 class="title">
+                        Harry Potter and the Philosopher's Stone
+                    </h3>
+                    <div class="description">
+                        <span class="author">Author: JK Rowling</span>
+                        <span class="language">Language: English</span>
+                        <p class="summary">
+                            <span>Summary: </span>Harry Potter has never even
+                            heard of Hogwarts when the letters start dropping on
+                            the doormat at number four, Privet Drive. Addressed
+                            in green ink on yellowish parchment with a purple
+                            seal, they are swiftly confiscated by his grisly
+                            aunt and uncle. Then, on Harry's eleventh birthday,
+                            a great beetle-eyed giant of a man called Rubeus
+                            Hagrid bursts in with some astonishing news: Harry
+                            Potter is a wizard, and he has a place at Hogwarts
+                            School of Witchcraft and Wizardry. An incredible
+                            adventure is about to begin!
+                        </p>
+                    </div>
+                    <div class="entry-footer">
+                        <span class="pages-read">100</span>
+                        <span>|</span>
+                        <span class="total-pages">200</span>
+                    </div>
+                </div> -->
             </div>
         </main>
+        <div class="modal-overlay" id="modal-overlay-1">
+            <div class="modal" id="delete-all-modal">
+                <h3>Are you sure you want to delete all your book entries?</h3>
+                <button id="delete-btn">DELETE</button>
+                <button id="cancel-btn">CANCEL</button>
+            </div>
+        </div>
+        <div class="modal-overlay" id="modal-overlay-2">
+            <div class="modal" id="edit-entry-modal">
+                <h3>Add New Book</h3>
+                <form>
+                    <label for="title-input">
+                        Title
+                    <input type="text" name="title-input" id="title-input">
+
+                    </label>
+
+                    <label for="author-input">
+                        Author
+                        <input type="text" name="author-input" id="author-input">
+                    </label>
+
+                    <label for="language-input">
+                        Language
+                        <input type="text" name="language-input" id="language-input">
+                    </label>
+
+                    <label for="summary-input">
+                        Summary
+                        <input type="text" name="summary-input" id="summary-input">
+                    </label>
+
+                    <label for="pages-read-input">
+                        Pages read
+                        <input type="text" name="pages-read-input" id="pages-read-input">
+                    </label>
+
+                    <label for="total-pages-input">
+                        Total Pages
+                        <input type="text" name="total-pages-input" id="total-pages-input">
+                    </label>
+                    
+                </form>
+                <div id="edit-entry-btns">
+                    <button type="submit" id="confirm-edit-btn">Confirm</button>
+                    <button id="delete-entry-btn">Delete entry</button>
+                    <button id="cancel-entry-btn">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <script src="scripts/index.js"></script>
     </body>
 </html>

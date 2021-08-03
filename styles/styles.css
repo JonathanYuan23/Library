@@ -3,7 +3,7 @@
 /* GLOBAL */
 
 html {
-    background-color: rgb(235, 235, 235);
+    background-color: rgba(235, 235, 235, 1);
     color: rgba(65, 65, 65, 1);
     font-family: 'Raleway', sans-serif;
     padding: 50px 200px;
@@ -39,13 +39,16 @@ hr {
 
 button {
     border: none;
+    cursor: pointer;
 }
 
 /* HEADER */
 
-#title > h2 {
+header > h2 {
     margin-top: 10px;
 }
+
+/* LIBRARY INFO */
 
 #info {
     display: flex;
@@ -72,40 +75,40 @@ button {
     gap: 20px;
 }
 
-#add-entry, #delete-entry {
-    border-radius: 10px;
+#add-entry,
+#delete-entries {
+    border-radius: 5px;
+    color: rgba(250, 250, 250, 1);
     cursor: pointer;
+    font-size: 2rem;
     height: 50px;
     width: 50px;
 }
 
 #add-entry {
-    background-color: rgb(50, 188, 230);
+    background-color: rgba(50, 188, 230, 1);
     transition: all 300ms ease-in-out;
 }
 
 #add-entry:hover {
-    background-color: rgb(42, 162, 199);
+    background-color: rgba(42, 162, 199, 1);
 }
 
-#delete-entry {
-    background-color: rgb(214, 24, 97);
+#delete-entries {
+    background-color: rgba(214, 24, 97, 1);
     transition: all 300ms ease-in-out;
 }
 
-#delete-entry:hover {
-    background-color: rgb(197, 24, 90);
+#delete-entries:hover {
+    background-color: rgba(197, 24, 90, 1);
 }
 
-.fa-plus, .fa-minus-square {
-    color: rgba(255, 255, 255, 1);
-    font-size: 1rem;
-}
+/* BOOK ENTRIES */
 
 #entries {
     display: flex;
     gap: 50px;
-    overflow: scroll;
+    overflow-x: scroll;
     padding: 50px 25px;
 }
 
@@ -113,36 +116,260 @@ button {
     height: 10px;
 }
 
-#entries::-webkit-scrollbar-track, #entries::-webkit-scrollbar-corner {
+#entries::-webkit-scrollbar-track,
+#entries::-webkit-scrollbar-corner {
     background-color: transparent;
 }
 
 #entries::-webkit-scrollbar-thumb {
     background-color: rgba(200, 200, 200, 1);
     border-radius: 5px;
-} 
+}
 
 #entries::-webkit-scrollbar-thumb:hover {
     background-color: rgba(175, 175, 175, 1);
-} 
+}
 
 #entries::-webkit-scrollbar-thumb:active {
     background-color: rgba(150, 150, 150, 1);
-} 
+}
 
 .entry {
+    align-items: center;
     background-color: rgba(250, 250, 250, 1);
     border-radius: 10px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: column nowrap;
     flex-shrink: 0;
     height: 350px;
-    line-height: 350px;
+    justify-content: space-between;
+    padding: 40px 20px 20px;
     text-align: center;
     transition: all 200ms ease-in-out;
-    width: 250px;
+    width: 350px;
 }
 
 .entry:hover {
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
     cursor: pointer;
+}
+
+.title {
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 275px;
+}
+
+.description {
+    box-sizing: border-box;
+    height: calc(350px - 40px - 20px - (16px * 4));
+    line-height: 1rem;
+    overflow-y: auto;
+    padding: 0px 15px;
+    text-align: start;
+    width: 310px;
+}
+
+.description::-webkit-scrollbar {
+    width: 4px;
+}
+
+.description::-webkit-scrollbar-track,
+#entries::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
+.description::-webkit-scrollbar-thumb {
+    background-color: rgba(200, 200, 200, 1);
+    border-radius: 5px;
+}
+
+.description::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(175, 175, 175, 1);
+}
+
+.description::-webkit-scrollbar-thumb:active {
+    background-color: rgba(150, 150, 150, 1);
+}
+
+.description span {
+    font-size: 0.9rem;
+}
+
+.author,
+.language {
+    display: block;
+    margin: 15px 0;
+}
+
+.summary {
+    font-size: 0.8rem;
+    line-height: 20px;
+}
+
+.entry-footer {
+    border-radius: 5px;
+    padding: 5px 10px;
+    transition: all 200ms ease-in-out;
+}
+
+.entry-footer:hover {
+    background-color: rgba(235, 235, 235);
+}
+
+.pages-read, .total-pages {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+/* MODALS */
+
+.modal {
+    background-color: rgb(235, 235, 235);
+    border-radius: 5px;
+    left: 50%;
+    padding: 30px 50px;
+    position: fixed;
+    text-align: center;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.modal-overlay {
+    background-color: rgba(0, 0, 0, 0.8);
+    height: 100%;
+    left: 0%;
+    opacity: 0;
+    position: fixed;
+    top: 0%;
+    transform: scale(0);
+    transition: opacity 200ms ease-in-out;
+    width: 100%;
+}
+
+.overlay-visible {
+    transform: scale(1);
+}
+
+.overlay-full-opacity {
+    opacity: 1;
+}
+
+/* DELETE ALL MODAL */
+
+/* #delete-all-modal {
+    transition: all 200ms ease-in-out;
+}
+
+#delete-all-modal.active {
+    opacity: 1;
+} */
+
+#delete-all-modal > button {
+    background-color: transparent;
+    color: inherit;
+}
+
+.close-btn {
+    align-items: center;
+    top: 10px;
+    display: flex;
+    font-size: 1.5rem;
+    height: 10px;
+    justify-content: center;
+    position: absolute;
+    right: 10px;
+    width: 10px;
+}
+
+#delete-all-modal > h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+}
+
+#delete-all-modal > #delete-btn,
+#delete-all-modal > #cancel-btn {
+    border-radius: 5px;
+    padding: 10px 20px;
+    transition: all 200ms ease-in-out;
+}
+
+#delete-all-modal > #delete-btn:hover,
+#delete-all-modal > #cancel-btn:hover {
+    background-color: rgba(225, 225, 225, 1);
+}
+
+/* EDIT ENTRY MODAL */
+
+/* #edit-entry-modal {
+    transition: all 200ms ease-in-out;
+}
+
+#edit-entry-modal.active {
+    opacity: 1;
+} */
+
+#edit-entry-modal * {
+    font-size: 1rem;
+    display: block;
+}
+
+#edit-entry-modal > h3 {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+#edit-entry-modal form > * {
+    padding: 15px 0px;
+}
+
+label[for] {
+    text-align: left;
+}
+
+input[type='text'] {
+    background-color: inherit;
+    border: 1px solid rgba(200, 200, 200, 1);
+    border-radius: 3px;
+    color: rgba(100, 100, 100, 1);
+    margin-top: 10px;
+    padding: 7px 15px;
+    width: 400px;
+}
+
+input[type='text']:focus {
+    outline: none;
+}
+
+#edit-entry-modal button {
+    background-color: inherit;
+    border: 1px solid rgba(200, 200, 200, 1);
+    border-radius: 3px;
+    font-family: inherit;
+    margin: auto;
+    margin-top: 15px;
+    padding: 10px 30px;
+    transition: all 200ms ease-in-out;
+}
+
+#edit-entry-modal button:hover {
+    background-color: rgba(225, 225, 225, 1);
+}
+
+#edit-entry-btns {
+    text-align: left;
+}
+
+#edit-entry-btns button {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+#edit-entry-btns > #delete-entry-btn {
+    display: none;
 }
