@@ -227,7 +227,8 @@ header > h2 {
     background-color: rgba(235, 235, 235);
 }
 
-.pages-read, .total-pages {
+.pages-read,
+.total-pages {
     margin-left: 5px;
     margin-right: 5px;
 }

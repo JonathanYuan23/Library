@@ -43,6 +43,17 @@ Book.prototype.generateHTML = function () {
     return html;
 };
 
+// ==================== => local storage
+
+function saveLibrary() {
+    const libraryString = JSON.stringify(library);
+    localStorage.setItem('library', libraryString);
+}
+
+function retrieveLibrary() {
+    return JSON.parse(localStorage.getItem('library'));
+}
+
 // ==================== => render entries
 
 function addEntry(book) {
@@ -51,7 +62,7 @@ function addEntry(book) {
     entry.innerHTML = book.generateHTML();
 
     books++;
-    booksCompleted += (book.pagesRead === book.pagesTotal) ? 1 : 0;
+    booksCompleted += book.pagesRead === book.pagesTotal ? 1 : 0;
     pages += book.pagesTotal;
     pagesRead += book.pagesRead;
 
@@ -73,15 +84,29 @@ function addEntry(book) {
     });
     entries.appendChild(entry);
     library.push(book);
+    saveLibrary();
 }
 
 function renderEntries() {
-    for (let i = 0; i < library.length; i++) {
-        const book = library[i];
+    const retrievedEntries = retrieveLibrary();
+    localStorage.clear();
+    for (let i = 0; i < retrievedEntries.length; i++) {
+        const bookData = retrievedEntries[i];
+        const book = new Book(
+            bookData.title,
+            bookData.author,
+            bookData.language,
+            bookData.summary,
+            bookData.pagesRead,
+            bookData.pagesTotal
+        );
         addEntry(book);
-        entries.appendChild(entry);
     }
 }
+
+window.addEventListener('load', () => {
+    if (localStorage.length > 0) renderEntries();
+});
 
 // ==================== => change library statistics
 
@@ -95,7 +120,6 @@ function editStatistics() {
 // ==================== => change page number
 
 function changePage(pageBtn) {
-
     const children = pageBtn.childNodes;
     const oldPage = Number(children[0].textContent);
     const pagesTotal = Number(children[2].textContent);
@@ -104,22 +128,28 @@ function changePage(pageBtn) {
 
     console.log(newPageString);
 
-    if (newPageString === null || !newPageString.length || Number.isNaN(newPage) || newPage < 0 || newPage > pagesTotal) {
+    if (
+        newPageString === null ||
+        !newPageString.length ||
+        Number.isNaN(newPage) ||
+        newPage < 0 ||
+        newPage > pagesTotal
+    ) {
         alert(`You must enter an integer between 0 and ${pagesTotal}`);
-    } 
-    else {
+    } else {
         children[0].textContent = `${newPage}`;
 
         const pos = Array.from(currentEntry.parentNode.querySelectorAll('.entry')).indexOf(currentEntry);
         library[pos].pagesRead = newPage;
 
-        if(oldPage === pagesTotal && newPage !== pagesTotal) {
+        if (oldPage === pagesTotal && newPage !== pagesTotal) {
             booksCompleted--;
-        } else if(oldPage !== pagesTotal && newPage === pagesTotal) {
+        } else if (oldPage !== pagesTotal && newPage === pagesTotal) {
             booksCompleted++;
         }
         pagesRead += newPage - oldPage;
         editStatistics();
+        saveLibrary();
     }
 }
 
@@ -131,8 +161,7 @@ function showModal(modalOverlay, entry) {
         editEntryHeader.textContent = 'Edit Book Entry';
         deleteEntryBtn.style.display = 'inline-block';
         fillInputs(entry);
-    } 
-    else {
+    } else {
         editEntryHeader.textContent = 'Add New Book';
     }
     modalOverlay.classList.add('overlay-visible');
@@ -156,7 +185,7 @@ function hideModal(modalOverlay) {
     }, 200);
 }
 
-// buttons in delete all modal
+// ==================== => delete all entries
 cancelBtn.addEventListener('click', () => hideModal(modalOverlay1));
 deleteBtn.addEventListener('click', () => {
     hideModal(modalOverlay1);
@@ -166,27 +195,32 @@ deleteBtn.addEventListener('click', () => {
 
     books = booksCompleted = pages = pagesRead = 0;
     editStatistics();
+    saveLibrary();
 });
 
 // ==================== => edit modal
 
 function editEntry(book) {
     const entryFields = currentEntry.querySelectorAll('.entry-field');
-    const oldPage = Number(entryFields[4].textContent);
-    const oldPagesTotal = Number(entryFields[5].textContent);
+    const pos = Array.from(currentEntry.parentNode.querySelectorAll('.entry')).indexOf(currentEntry);
+
+    const oldPage = Number(library[pos].pagesRead);
+    const oldPagesTotal = Number(library[pos].pagesTotal);
     const newPage = Number(book.pagesRead);
     const newPagesTotal = Number(book.pagesTotal);
 
     if (oldPage === oldPagesTotal && newPage !== newPagesTotal) {
         booksCompleted--;
-    }
-    else if (oldPage !== oldPagesTotal && newPage === newPagesTotal) {
+    } else if (oldPage !== oldPagesTotal && newPage === newPagesTotal) {
         booksCompleted++;
     }
 
     pagesRead += newPage - oldPage;
     pages += newPagesTotal - oldPagesTotal;
     editStatistics();
+
+    library[pos] = book;
+    saveLibrary();
 
     entryFields[0].textContent = `${book.title}`;
     entryFields[1].textContent = `Author: ${book.author}`;
@@ -253,8 +287,7 @@ function validate() {
     if (!title.length) {
         showError({ index: 0, msg: TITLE_REQUIRED });
         valid = false;
-    } 
-    else {
+    } else {
         hideError(0);
     }
 
@@ -262,8 +295,7 @@ function validate() {
     if (!author.length) {
         showError({ index: 1, msg: AUTHOR_REQUIRED });
         valid = false;
-    } 
-    else {
+    } else {
         hideError(1);
     }
 
@@ -273,8 +305,7 @@ function validate() {
     if (!language.length) {
         showError({ index: 2, msg: LANGUAGE_REQUIRED });
         valid = false;
-    } 
-    else {
+    } else {
         hideError(2);
     }
 
@@ -282,8 +313,7 @@ function validate() {
     if (!pagesReadString.length || Number.isNaN(pagesRead) || pagesRead < 0) {
         showError({ index: 4, msg: PAGES_READ_REQUIRED });
         valid = pagesGood = false;
-    } 
-    else {
+    } else {
         hideError(4);
     }
 
@@ -291,8 +321,7 @@ function validate() {
     if (!pagesTotalString.length || Number.isNaN(pagesTotal) || pagesTotal < 0) {
         showError({ index: 5, msg: PAGES_READ_REQUIRED });
         valid = pagesGood = false;
-    } 
-    else {
+    } else {
         hideError(5);
     }
 
@@ -301,8 +330,7 @@ function validate() {
         if (pagesRead > pagesTotal) {
             showError({ index: 4, msg: READ_LESS_THAN_TOTAL_PAGES });
             valid = false;
-        } 
-        else {
+        } else {
             hideError(4);
         }
     }
@@ -322,8 +350,7 @@ confirmEditBtn.addEventListener('click', () => {
         // if a entry was edited
         if (editing) {
             editEntry(response.book);
-        } 
-        else {
+        } else {
             // else if a new entry was created
             addEntry(response.book);
         }
@@ -353,6 +380,7 @@ deleteEntryBtn.addEventListener('click', () => {
 
     library.splice(pos, 1);
     currentEntry.remove();
+    saveLibrary();
 });
 
 cancelEntryBtn.addEventListener('click', () => {
