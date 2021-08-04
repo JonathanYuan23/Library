@@ -42,6 +42,12 @@ button {
     cursor: pointer;
 }
 
+small {
+    color: rgba(220, 53, 70, 1);
+    font-size: 0.8rem !important;
+    padding-top: 8px;
+}
+
 /* HEADER */
 
 header > h2 {
@@ -138,7 +144,7 @@ header > h2 {
     align-items: center;
     background-color: rgba(250, 250, 250, 1);
     border-radius: 10px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
     display: flex;
     flex-flow: column nowrap;
@@ -152,7 +158,7 @@ header > h2 {
 }
 
 .entry:hover {
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
     cursor: pointer;
 }
 
@@ -262,14 +268,6 @@ header > h2 {
 
 /* DELETE ALL MODAL */
 
-/* #delete-all-modal {
-    transition: all 200ms ease-in-out;
-}
-
-#delete-all-modal.active {
-    opacity: 1;
-} */
-
 #delete-all-modal > button {
     background-color: transparent;
     color: inherit;
@@ -306,14 +304,6 @@ header > h2 {
 
 /* EDIT ENTRY MODAL */
 
-/* #edit-entry-modal {
-    transition: all 200ms ease-in-out;
-}
-
-#edit-entry-modal.active {
-    opacity: 1;
-} */
-
 #edit-entry-modal * {
     font-size: 1rem;
     display: block;
@@ -325,7 +315,7 @@ header > h2 {
 }
 
 #edit-entry-modal form > * {
-    padding: 15px 0px;
+    padding: 10px 0px;
 }
 
 label[for] {
@@ -344,6 +334,10 @@ input[type='text'] {
 
 input[type='text']:focus {
     outline: none;
+}
+
+input[type='text'].error {
+    border: 1px solid rgba(220, 53, 70, 1);
 }
 
 #edit-entry-modal button {
