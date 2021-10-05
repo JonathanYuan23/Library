@@ -57,7 +57,7 @@ function retrieveLibrary() {
 // ==================== => render entries
 
 function addEntry(book) {
-    const entry = document.createElement('div');
+    const entry = document.createElement('li');
     entry.classList.add('entry');
     entry.innerHTML = book.generateHTML();
 
@@ -387,3 +387,4 @@ cancelEntryBtn.addEventListener('click', () => {
     hideModal(modalOverlay2);
     setTimeout(clearInputs, 200);
 });
+

@@ -3,9 +3,9 @@
 /* GLOBAL */
 
 html {
-    background-color: rgba(235, 235, 235, 1);
+    background-color: rgba(255, 255, 255, 1);
     color: rgba(65, 65, 65, 1);
-    font-family: 'Raleway', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     padding: 50px 200px;
 }
 
@@ -86,27 +86,19 @@ header > h2 {
     border-radius: 5px;
     color: rgba(250, 250, 250, 1);
     cursor: pointer;
-    font-size: 2rem;
-    height: 50px;
-    width: 50px;
+    font-size: 1.5rem;
+    height: 40px;
+    width: 40px;
 }
 
-#add-entry {
-    background-color: rgba(50, 188, 230, 1);
-    transition: all 300ms ease-in-out;
-}
-
-#add-entry:hover {
-    background-color: rgba(42, 162, 199, 1);
-}
-
+#add-entry,
 #delete-entries {
-    background-color: rgba(214, 24, 97, 1);
-    transition: all 300ms ease-in-out;
+    background-color: rgba(65, 65, 65, 1);
 }
 
+#add-entry:hover,
 #delete-entries:hover {
-    background-color: rgba(197, 24, 90, 1);
+    background-color: rgba(65, 65, 65, 0.8);
 }
 
 /* BOOK ENTRIES */
@@ -142,7 +134,7 @@ header > h2 {
 
 .entry {
     align-items: center;
-    background-color: rgba(250, 250, 250, 1);
+    background-color: rgba(255, 255, 255, 1);
     border-radius: 10px;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
@@ -165,6 +157,7 @@ header > h2 {
 .title {
     font-weight: 700;
     overflow: hidden;
+    line-height: 25px;
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 275px;
@@ -236,7 +229,7 @@ header > h2 {
 /* MODALS */
 
 .modal {
-    background-color: rgb(235, 235, 235);
+    background-color: rgb(255, 255, 255);
     border-radius: 5px;
     left: 50%;
     padding: 30px 50px;
@@ -312,7 +305,8 @@ header > h2 {
 
 #edit-entry-modal > h3 {
     font-size: 2rem;
-    font-weight: 700;
+    font-weight: 500;
+    margin-bottom: 20px;
 }
 
 #edit-entry-modal form > * {
@@ -327,7 +321,8 @@ input[type='text'] {
     background-color: inherit;
     border: 1px solid rgba(200, 200, 200, 1);
     border-radius: 3px;
-    color: rgba(100, 100, 100, 1);
+    font-size: 0.875rem !important;
+    color: rgba(65, 65, 65, 1);
     margin-top: 10px;
     padding: 7px 15px;
     width: 400px;
