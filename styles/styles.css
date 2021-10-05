@@ -321,6 +321,7 @@ input[type='text'] {
     background-color: inherit;
     border: 1px solid rgba(200, 200, 200, 1);
     border-radius: 3px;
+    font-family: inherit;
     font-size: 0.875rem !important;
     color: rgba(65, 65, 65, 1);
     margin-top: 10px;
